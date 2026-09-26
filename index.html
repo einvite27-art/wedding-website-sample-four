@@ -424,7 +424,44 @@
       height: 100%;
       object-fit: contain;
     }
+/* Function Cards Container */
+.functions-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align cards */
+  gap: 30px;
+  margin-top: 10px;
+}
 
+/* Card jo exact video ratio pe fit hoga */
+.function-card {
+  width: 100%;
+  max-width: 320px; /* Mobile me video ki perfect royal width */
+  border-radius: 20px;
+  overflow: hidden;
+  border: 3px solid var(--gold-border);
+  background: transparent; /* Black background hataya */
+  box-shadow: 0 10px 30px rgba(77, 0, 12, 0.35);
+  margin: 0 auto;
+}
+
+/* Video Frame Container */
+.video-viewport {
+  width: 100%;
+  aspect-ratio: 9 / 16; /* Exact mobile reel/story vertical ratio */
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Video jo poore card ko bina black bars ke fill karega */
+.video-viewport video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Dono side ka black space khatam karega */
+  display: block;
+}
     /* ==========================================================
        7. DRESS CODE & PALETTE
        ========================================================== */
