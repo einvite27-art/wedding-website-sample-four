@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wedding Celebration | Pragya & Darsh</title>
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Cinzel:wght@600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --maroon-deep: #4d000c;
+      --maroon-rich: #6b0c1a;
+      --gold-dark: #8c6218;
+      --gold-bright: #d4a034;
+      --gold-border: #c99839;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Scroll Lock until door video finishes */
+    body.locked {
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: url('assets/images/bg-1.png') center top / cover no-repeat fixed;
+      color: var(--maroon-deep);
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================
+       1. OPENING DOOR VIDEO & LOCK FLOW
+       ========================================================== */
+    #opening-screen {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    #opening-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Tap To Open Door */
+    .tap-to-open-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .tap-door-btn {
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #f7df94, #ba8b27);
+      color: #3b050d;
+      border: 2px solid #fff;
+      border-radius: 35px;
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      box-shadow: 0 0 25px rgba(247, 223, 148, 0.9), 0 4px 15px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: pulseBtn 1.8s infinite;
+    }
+
+    @keyframes pulseBtn {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    /* Scroll Down Arrow */
+    .scroll-down-btn {
+      position: absolute;
+      bottom: 25px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      z-index: 15;
+      animation: bounceArrow 1.5s infinite;
+    }
+
+    .scroll-down-btn .icon-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #750e1e;
+      border: 2px solid #f7df94;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: 0 0 15px rgba(247, 223, 148, 0.8);
+    }
+
+    @keyframes bounceArrow {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ==========================================================
+       2. 360° ROTATING MUSIC DISC
+       ========================================================== */
+    .music-btn {
+      position: fixed;
+      bottom: 22px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #f7df94, #ba8b27);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3b050d;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 12px rgba(247, 223, 148, 0.8);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .music-btn.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .music-btn.playing {
+      animation: spin360 3.5s linear infinite;
+    }
+
+    @keyframes spin360 {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ==========================================================
+       SECTIONS & COMPACT TYPOGRAPHY
+       ========================================================== */
+    section {
+      padding: 24px 16px 10px; /* Spacing tightly condensed */
+      max-width: 440px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .sec-title {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: clamp(22px, 6vw, 26px);
+      color: var(--maroon-deep);
+      text-align: center;
+      margin-bottom: 2px;
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.9), 0 0 10px rgba(212, 160, 52, 0.3);
+      position: relative;
+    }
+
+    .sec-title::after {
+      content: '❖';
+      display: block;
+      font-size: 13px;
+      margin: 3px auto 10px;
+      color: var(--gold-border);
+    }
+
+    /* ==========================================================
+       3. METALLIC GLITTER MAROON SCRATCH CARD
+       ========================================================== */
+    .scratch-wrapper {
+      position: relative;
+      width: 310px;
+      height: 200px;
+      margin: 4px auto 10px;
+      border-radius: 16px;
+      border: 3px solid var(--gold-border);
+      box-shadow: 0 8px 25px rgba(77, 0, 12, 0.35);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .scratch-secret {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #fffcf5, #f5ebd0);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .scratch-secret h3 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 42px;
+      color: var(--maroon-deep);
+      line-height: 1;
+    }
+
+    .scratch-secret .date-badge {
+      margin-top: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #1a0800;
+      letter-spacing: 2px;
+    }
+
+    #scratch-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 310px;
+      height: 200px;
+      z-index: 2;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    /* Sparkle Burst */
+    .sparkle-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+      display: none;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #fdf2a6;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ffe169;
+      animation: sparkleFly 0.8s ease-out forwards;
+    }
+
+    @keyframes sparkleFly {
+      0% { transform: translate(0, 0) scale(1.2); opacity: 1; }
+      100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+    }
+
+    /* ==========================================================
+       4. INTRODUCTION SECTION
+       ========================================================== */
+    .intro-box {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 22px 18px;
+      box-shadow: 0 6px 20px rgba(77, 0, 12, 0.15);
+      margin-top: 5px;
+    }
+
+    .shree-symbol {
+      font-size: 22px;
+      color: var(--maroon-rich);
+      margin-bottom: 4px;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .couple-name {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(44px, 10vw, 56px);
+      color: var(--maroon-deep);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+      margin: 4px 0 8px;
+      line-height: 1.1;
+    }
+
+    .intro-desc {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #401016;
+      font-weight: 600;
+    }
+
+    /* ==========================================================
+       5. LARGE STACKED DIAGONAL REVEAL GALLERY
+       ========================================================== */
+    .diagonal-gallery-section {
+      padding: 20px 0 15px;
+      text-align: center;
+    }
+
+    .diagonal-stack {
+      width: 100%;
+      height: 410px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px auto;
+    }
+
+    .stack-card {
+      position: absolute;
+      width: 280px;
+      height: 380px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 3px solid var(--gold-border);
+      box-shadow: 0 12px 25px rgba(40, 0, 7, 0.4);
+      transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+      cursor: pointer;
+      background: #000;
+    }
+
+    .stack-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    /* Stacked angled states */
+    .stack-card:nth-child(1) { transform: translate(-20px, -15px) rotate(-7deg); z-index: 1; }
+    .stack-card:nth-child(2) { transform: translate(16px, -10px) rotate(6deg); z-index: 2; }
+    .stack-card:nth-child(3) { transform: translate(-12px, 10px) rotate(-4deg); z-index: 3; }
+    .stack-card:nth-child(4) { transform: translate(12px, 12px) rotate(5deg); z-index: 4; }
+    .stack-card:nth-child(5) { transform: translate(-6px, 0px) rotate(-2deg); z-index: 5; }
+    .stack-card:nth-child(6) { transform: translate(0px, 0px) rotate(0deg); z-index: 6; }
+
+    /* Interactive Prev / Next Navigation Arrows */
+    .gallery-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      margin-top: 12px;
+    }
+
+    .nav-arrow-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #6e0a18;
+      border: 2px solid var(--gold-border);
+      color: #fce8a6;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(77, 0, 12, 0.3);
+      transition: transform 0.2s;
+    }
+
+    .nav-arrow-btn:active {
+      transform: scale(0.92);
+      background: #4a040e;
+    }
+
+    /* ==========================================================
+       6. VERTICAL FUNCTION VIDEOS (NO CROPPING)
+       ========================================================== */
+    .functions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-top: 6px;
+    }
+
+    .function-card {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--gold-border);
+      background: #1f0106;
+      box-shadow: 0 8px 25px rgba(77, 0, 12, 0.3);
+    }
+
+    .video-viewport {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 520px;
+      background: #000;
+    }
+
+    .video-viewport video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* ==========================================================
+       7. DRESS CODE & PALETTE
+       ========================================================== */
+    .dress-code-card {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 20px 16px;
+      box-shadow: 0 4px 15px rgba(77, 0, 12, 0.15);
+    }
+
+    .palette-grid {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .swatch-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-border);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .swatch-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--maroon-deep);
+    }
+
+    /* ==========================================================
+       8. VENUE & RSVP SECTION
+       ========================================================== */
+    .venue-card, .rsvp-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid var(--gold-border);
+      border-radius: 16px;
+      padding: 22px 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 15px rgba(77, 0, 12, 0.15);
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #750e1e, #4a030d);
+      color: #fce8a6;
+      border: 1.5px solid var(--gold-border);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .rsvp-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .rsvp-form input, .rsvp-form select {
+      width: 100%;
+      padding: 11px 14px;
+      background: #fff;
+      border: 1.5px solid var(--gold-border);
+      border-radius: 8px;
+      color: var(--maroon-deep);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .rsvp-form input::placeholder {
+      color: #8c525b;
+    }
+
+    .rsvp-submit-btn {
+      background: linear-gradient(135deg, #750e1e, #4a030d);
+      border: 1.5px solid var(--gold-border);
+      color: #fce8a6;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    /* Scroll Animation */
+    .reveal-elem {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: all 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .reveal-elem.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="locked">
+
+  <!-- Background Music Audio -->
+  <audio id="wedding-music" loop>
+    <source src="assets/audio/wedding-music.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- 360° Continuous Rotating Music Disc Button -->
+  <div class="music-btn" id="music-disc" title="Music Controller">
+    <i class="fa-solid fa-compact-disc"></i>
+  </div>
+
+  <!-- ==========================================================
+       1. OPENING DOOR VIDEO
+       ========================================================== -->
+  <div id="opening-screen">
+    <video id="opening-video" muted playsinline preload="auto">
+      <source src="assets/video/opening.mp4" type="video/mp4">
+    </video>
+
+    <!-- Tap To Open Door (Starts Video & Music) -->
+    <div class="tap-to-open-wrap" id="tap-door-overlay">
+      <div class="tap-door-btn">
+        <i class="fa-solid fa-door-open"></i> Tap to Open Door
+      </div>
+    </div>
+
+    <!-- Scroll Down Arrow (Appears ONLY after video ends) -->
+    <a href="#scratch-section" class="scroll-down-btn" id="scroll-down-arrow">
+      <div class="icon-circle"><i class="fa-solid fa-chevron-down"></i></div>
+      <span>Scroll Down</span>
+    </a>
+  </div>
+
+  <!-- Main Content Wrapper -->
+  <div id="main-content">
+
+    <!-- ==========================================================
+       2. SCRATCH CARD (AUSPICIOUS DATE)
+       ========================================================== -->
+    <section id="scratch-section" class="reveal-elem">
+      <h2 class="sec-title">Auspicious Date</h2>
+
+      <div class="scratch-wrapper">
+        <div class="scratch-secret">
+          <h3>Shubh Vivaah</h3>
+          <div class="date-badge">28 NOVEMBER 2026</div>
+        </div>
+
+        <canvas id="scratch-canvas" width="310" height="200"></canvas>
+        <div class="sparkle-container" id="sparkle-box"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+       3. INTRODUCTION SECTION
+       ========================================================== -->
+    <section id="intro" class="reveal-elem">
+      <div class="intro-box">
+        <span class="shree-symbol">॥ श्री गणेशाय नमः ॥</span>
+        <p style="text-transform: uppercase; letter-spacing: 1.5px; font-size: 11.5px; color: var(--maroon-rich); font-weight: 700;">Together with their families</p>
+        
+        <h1 class="couple-name">Pragya & Darsh</h1>
+        
+        <p class="intro-desc">
+          Invite you to share in the joy of their wedding celebration. 
+          Your warm presence and blessings will make our union truly auspicious and unforgettable.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+       4. STACKED DIAGONAL REVEAL GALLERY
+       ========================================================== -->
+    <div class="diagonal-gallery-section reveal-elem">
+      <h2 class="sec-title">Sweet Memories</h2>
+
+      <div class="diagonal-stack" id="gallery-stack">
+        <div class="stack-card"><img src="assets/images/gallery (1).png" alt="Memory 1"></div>
+        <div class="stack-card"><img src="assets/images/gallery (2).png" alt="Memory 2"></div>
+        <div class="stack-card"><img src="assets/images/gallery (3).png" alt="Memory 3"></div>
+        <div class="stack-card"><img src="assets/images/gallery (4).png" alt="Memory 4"></div>
+        <div class="stack-card"><img src="assets/images/gallery (5).png" alt="Memory 5"></div>
+        <div class="stack-card"><img src="assets/images/gallery (6).png" alt="Memory 6"></div>
+      </div>
+
+      <!-- Arrow Controls -->
+      <div class="gallery-nav">
+        <button class="nav-arrow-btn" id="prev-photo" title="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="nav-arrow-btn" id="next-photo" title="Next"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- ==========================================================
+       5. VERTICAL FUNCTION VIDEOS (CLEAN & COMPLETE)
+       ========================================================== -->
+    <section id="functions" class="reveal-elem">
+      <h2 class="sec-title">Wedding Ceremonies</h2>
+
+      <div class="functions-list">
+        
+        <!-- Haldi -->
+        <div class="function-card">
+          <div class="video-viewport">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/video/haldi.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <!-- Mehendi -->
+        <div class="function-card">
+          <div class="video-viewport">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/video/mehendi.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <!-- Sangeet -->
+        <div class="function-card">
+          <div class="video-viewport">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/video/sangeet.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <!-- Wedding -->
+        <div class="function-card">
+          <div class="video-viewport">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/video/wedding.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <!-- Reception -->
+        <div class="function-card">
+          <div class="video-viewport">
+            <video muted loop playsinline preload="metadata">
+              <source src="assets/video/reception.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================
+       6. DRESS CODE & PALETTE
+       ========================================================== -->
+    <section id="dress-code" class="reveal-elem">
+      <div class="dress-code-card">
+        <h2 class="sec-title">Dress Code Palette</h2>
+        
+        <div class="palette-grid">
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #e6be44;"></div>
+            <span class="swatch-name">Haldi</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #1b6845;"></div>
+            <span class="swatch-name">Mehendi</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #0f1c4d;"></div>
+            <span class="swatch-name">Sangeet</span>
+          </div>
+          <div class="swatch">
+            <div class="swatch-circle" style="background: #6a001a;"></div>
+            <span class="swatch-name">Wedding</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+       7. VENUE & RSVP
+       ========================================================== -->
+    <section id="venue-rsvp" class="reveal-elem">
+      <div class="venue-card">
+        <i class="fa-solid fa-hotel" style="font-size: 28px; color: var(--maroon-rich); margin-bottom: 6px;"></i>
+        <h3 style="font-family: 'Cinzel', serif; font-size: 19px; color: var(--maroon-deep);">The Grand Heritage Palace</h3>
+        <p style="font-size: 12.5px; color: #57101a; margin-top: 4px; font-weight: 600;">Palace Marg, Mumbai, Maharashtra</p>
+        
+        <a href="https://maps.google.com" target="_blank" class="map-btn">
+          <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+        </a>
+      </div>
+
+      <div class="rsvp-card">
+        <h3 style="font-family: 'Cinzel', serif; font-size: 18px; color: var(--maroon-deep); margin-bottom: 4px;">Confirm Your Presence</h3>
+        
+        <form class="rsvp-form" onsubmit="event.preventDefault(); alert('Thank you! Your RSVP has been confirmed.');">
+          <input type="text" placeholder="Your Full Name" required>
+          <input type="number" placeholder="Number of Guests" min="1" max="10" required>
+          <select required>
+            <option value="" disabled selected>Will you be attending?</option>
+            <option value="yes">Joyfully Accepting</option>
+            <option value="no">Regretfully Declining</option>
+          </select>
+          <button type="submit" class="rsvp-submit-btn">Submit RSVP</button>
+        </form>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ==========================================================
+       JAVASCRIPT
+       ========================================================== -->
+  <script>
+    // 1. DOOR VIDEO, MUSIC START & SCROLL UNLOCK
+    const openVideo = document.getElementById('opening-video');
+    const tapOverlay = document.getElementById('tap-door-overlay');
+    const scrollArrow = document.getElementById('scroll-down-arrow');
+    const audio = document.getElementById('wedding-music');
+    const musicDisc = document.getElementById('music-disc');
+    let isMusicPlaying = false;
+
+    // Tap to Open Door Click
+    tapOverlay.addEventListener('click', () => {
+      tapOverlay.style.display = 'none';
+      openVideo.play();
+      startMusic();
+    });
+
+    // Opening Video ends -> Unlock scroll and show Down Arrow
+    openVideo.addEventListener('ended', () => {
+      document.body.classList.remove('locked');
+      scrollArrow.style.display = 'flex';
+    });
+
+    // 2. 360° MUSIC CONTROLLER
+    function startMusic() {
+      audio.play().then(() => {
+        isMusicPlaying = true;
+        musicDisc.classList.add('active', 'playing');
+        musicDisc.innerHTML = '<i class="fa-solid fa-compact-disc"></i>';
+      }).catch(() => {});
+    }
+
+    function stopMusic() {
+      audio.pause();
+      isMusicPlaying = false;
+      musicDisc.classList.remove('playing');
+      musicDisc.innerHTML = '<i class="fa-solid fa-circle-play"></i>';
+    }
+
+    musicDisc.addEventListener('click', () => {
+      if (isMusicPlaying) {
+        stopMusic();
+      } else {
+        startMusic();
+      }
+    });
+
+    // 3. GLITTER MAROON SCRATCH CARD WITH SPARKLE EFFECT
+    const canvas = document.getElementById('scratch-canvas');
+    const ctx = canvas.getContext('2d');
+    const sparkleBox = document.getElementById('sparkle-box');
+    let isDrawing = false;
+    let isComplete = false;
+
+    function renderGlitterMaroonCover() {
+      const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      grad.addColorStop(0, '#59000f');
+      grad.addColorStop(0.3, '#780618');
+      grad.addColorStop(0.7, '#42000a');
+      grad.addColorStop(1, '#660413');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = 0; i < 600; i++) {
+        ctx.fillStyle = Math.random() > 0.5 ? 'rgba(255, 235, 150, 0.4)' : 'rgba(255, 255, 255, 0.35)';
+        ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2);
+      }
+
+      ctx.strokeStyle = '#f3c258';
+      ctx.lineWidth = 3;
+      ctx.strokeRect(8, 8, canvas.width - 16, canvas.height - 16);
+
+      ctx.fillStyle = '#fceec2';
+      ctx.font = 'bold 14px Cinzel, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('❖ SCRATCH THE ROYAL SEAL ❖', canvas.width / 2, canvas.height / 2 + 5);
+    }
+    renderGlitterMaroonCover();
+
+    function scratch(e) {
+      if (!isDrawing || isComplete) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.fill();
+
+      checkCompletion();
+    }
+
+    function checkCompletion() {
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let cleared = 0;
+      for (let i = 3; i < imgData.data.length; i += 16) {
+        if (imgData.data[i] === 0) cleared++;
+      }
+      const total = imgData.data.length / 16;
+      if (cleared / total > 0.45 && !isComplete) {
+        isComplete = true;
+        canvas.style.transition = 'opacity 0.5s ease';
+        canvas.style.opacity = '0';
+        setTimeout(() => canvas.style.display = 'none', 500);
+
+        triggerSparkles();
+      }
+    }
+
+    function triggerSparkles() {
+      sparkleBox.style.display = 'block';
+      for (let i = 0; i < 40; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'sparkle';
+        dot.style.left = '50%';
+        dot.style.top = '50%';
+        const dx = (Math.random() - 0.5) * 280 + 'px';
+        const dy = (Math.random() - 0.5) * 200 + 'px';
+        dot.style.setProperty('--dx', dx);
+        dot.style.setProperty('--dy', dy);
+        sparkleBox.appendChild(dot);
+      }
+      setTimeout(() => sparkleBox.style.display = 'none', 900);
+    }
+
+    canvas.addEventListener('mousedown', () => isDrawing = true);
+    window.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('touchstart', () => isDrawing = true);
+    window.addEventListener('touchend', () => isDrawing = false);
+    canvas.addEventListener('touchmove', scratch);
+
+    // 4. DIAGONAL GALLERY SHUFFLE (TAP & ARROW BUTTONS)
+    const stack = document.getElementById('gallery-stack');
+    const nextBtn = document.getElementById('next-photo');
+    const prevBtn = document.getElementById('prev-photo');
+
+    function shuffleNext() {
+      const top = stack.lastElementChild;
+      if (!top) return;
+      top.style.transform = 'translate(180px, -70px) rotate(22deg)';
+      top.style.opacity = '0';
+
+      setTimeout(() => {
+        stack.insertBefore(top, stack.firstElementChild);
+        setTimeout(() => {
+          top.style.transform = '';
+          top.style.opacity = '1';
+        }, 50);
+      }, 350);
+    }
+
+    function shufflePrev() {
+      const bottom = stack.firstElementChild;
+      if (!bottom) return;
+      bottom.style.opacity = '0';
+      stack.appendChild(bottom);
+      setTimeout(() => {
+        bottom.style.opacity = '1';
+      }, 50);
+    }
+
+    stack.addEventListener('click', shuffleNext);
+    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); shuffleNext(); });
+    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); shufflePrev(); });
+
+    // 5. VERTICAL FUNCTION VIDEOS - SCROLL AUTOPLAY
+    const videos = document.querySelectorAll('.video-viewport video');
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.play().catch(() => {});
+        } else {
+          entry.target.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+    videos.forEach(v => videoObserver.observe(v));
+
+    // 6. SCROLL REVEAL OBSERVER
+    const reveals = document.querySelectorAll('.reveal-elem');
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => scrollObserver.observe(r));
+  </script>
+</body>
+</html>
